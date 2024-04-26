@@ -1,0 +1,17 @@
+package shady_main;
+
+public class Dining_Hall extends Location{
+	
+	static String name = "Dining Hall";
+	static String character = "Professor Dumbledore";
+	
+	Dining_Hall() {
+		super(name, character);
+	}
+
+	@Override
+	public void look() {
+		System.out.println("\nThe " + name + " is biggest open area inside Hogwarts. " + character + " is here.");
+	}	
+	
+}
