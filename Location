@@ -1,0 +1,17 @@
+package shady_main;
+
+public abstract class Location {
+	String name;
+	String character;
+	
+	Location(String name, String character) {
+		this.name = name;
+		this.character = character;
+	}
+	
+	public abstract void look();
+	
+	public void exit() {
+		System.out.println("Leaving the room... enter new direction");
+	}
+}
