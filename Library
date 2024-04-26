@@ -1,0 +1,19 @@
+package shady_main;
+
+public class Library extends Location{
+	
+	static String name = "Library";
+	static String character = "Hermione";
+	
+	Library(){
+		super(name, character);
+	}
+
+	@Override
+	public void look() {
+		System.out.println("The " + name + " is where students spend a lot of their time once the academic year starts. " 
+		+ character + " is here.");
+	}
+	
+
+}
