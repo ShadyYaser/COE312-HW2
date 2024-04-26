@@ -1,0 +1,56 @@
+package shady_main;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class Watch implements Runnable{
+
+	boolean isTimeUp = false;
+	private Harry harry;
+	
+	public Watch(Harry harry){
+		this.harry = harry;
+		Thread t = new Thread(this);
+		t.start();
+	}
+	
+	
+	public void notifyHarry() { //Observer Design Pattern
+		System.out.println();
+		harry.timeWarning();
+	}
+	
+	@Override
+	public void run() {
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			int i=0;
+			
+			@Override
+			public void run() {
+			i++;
+			System.out.println(i + " minutes passed... ");
+			if(i==3) {
+				System.out.println("Hide map contents before someone sees you!");
+					synchronized (harry) { notifyHarry();
+				try {
+					Thread.sleep(10*1000); //give Harry 10 seconds to hide map
+					if(harry.mapVisible == true) {
+						harry.caught = true;
+						System.out.println("You have been caught... and the Marauder's map has been confiscated.");
+						System.exit(1);
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					}
+				timer.cancel();
+				}
+			}
+		}	
+};
+	timer.scheduleAtFixedRate(task, 60*1000, 60*1000); //start after one minute; do task every minute
+}
+
+}
