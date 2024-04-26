@@ -1,0 +1,28 @@
+package shady_main;
+
+public class Hermione implements Runnable{
+	String location = "Library";
+	Harry harry;
+	boolean waiting = true;
+	
+	Hermione(Harry harry){
+		this.harry = harry;
+		Thread t = new Thread(this);
+		t.start();
+	}
+	
+	public void monitorHarry() {
+		if(harry.getLoc().equals("Library")) {
+			System.out.println("Hermione:- Harry I am here!");
+			waiting = false;
+		}
+	}
+	@Override
+	public void run() {
+		while(waiting) {
+			synchronized(harry){
+				monitorHarry();
+			}
+		}
+	}
+}
