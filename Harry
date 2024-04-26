@@ -1,0 +1,62 @@
+package shady_main;
+
+import java.util.Random;
+
+public class Harry implements Runnable{
+	String location = "";
+	boolean foundH = false;
+	boolean mapVisible = true;
+	boolean warning = false;
+	boolean caught = false;
+	
+	Harry(){
+		Thread t = new Thread(this);
+		t.start();
+	}
+	
+	public void setLoc(String location) {
+		this.location = location;
+	}
+	
+	public String getLoc() {
+		return location;
+	}
+	
+	public void HideMap() {
+		this.mapVisible = false;
+	}
+	
+	public void checkForH() {
+			try {
+				if(location.equals("Library")) {
+				Thread.sleep(1000); //simulate harry finding Hermione
+				System.out.println("Found Hermione.");
+				HideMap();
+				foundH = true;
+				}
+			}catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	
+	public void timeWarning() {
+		Random r = new Random();
+		try {
+			Thread.sleep((r.nextInt(10)+1)*1000); //simulate a random time between 1-10s for harry to hide map
+			//note: harry doesn't hide map in time, always gets caught
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void run() {
+		Watch watch = new Watch(this);
+		while(!foundH && !caught) {
+			checkForH();
+		}
+	}
+	
+}
